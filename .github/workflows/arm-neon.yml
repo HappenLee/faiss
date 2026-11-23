@@ -1,0 +1,32 @@
+name: Faiss batch distances on ARM64
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y --no-install-recommends \
+            g++ cmake ninja-build libopenblas-dev libgtest-dev
+      - name: Build both CPU libraries and measure
+        run: bash run.sh
+      - name: Publish benchmark summary
+        if: success()
+        run: cat results/summary.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Save raw results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: faiss-arm64-results
+          path: results/
+          if-no-files-found: warn
+          retention-days: 14

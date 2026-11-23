@@ -1,0 +1,50 @@
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 10 tests from 8 test suites.
+[----------] Global test environment set-up.
+[----------] 1 test from TestFvecL2sqrNy
+[ RUN      ] TestFvecL2sqrNy.D2
+[       OK ] TestFvecL2sqrNy.D2 (0 ms)
+[----------] 1 test from TestFvecL2sqrNy (0 ms total)
+
+[----------] 1 test from TestFvecInnerProductsNy
+[ RUN      ] TestFvecInnerProductsNy.D2
+[       OK ] TestFvecInnerProductsNy.D2 (0 ms)
+[----------] 1 test from TestFvecInnerProductsNy (0 ms total)
+
+[----------] 2 tests from TestFvecL2sqr
+[ RUN      ] TestFvecL2sqr.distances_L2_squared_y_transposed
+[       OK ] TestFvecL2sqr.distances_L2_squared_y_transposed (0 ms)
+[ RUN      ] TestFvecL2sqr.nearest_L2_squared_y_transposed
+[       OK ] TestFvecL2sqr.nearest_L2_squared_y_transposed (0 ms)
+[----------] 2 tests from TestFvecL2sqr (0 ms total)
+
+[----------] 1 test from TestFvecL1
+[ RUN      ] TestFvecL1.manhattan_distance
+[       OK ] TestFvecL1.manhattan_distance (0 ms)
+[----------] 1 test from TestFvecL1 (0 ms total)
+
+[----------] 1 test from TestFvecLinf
+[ RUN      ] TestFvecLinf.chebyshev_distance
+[       OK ] TestFvecLinf.chebyshev_distance (0 ms)
+[----------] 1 test from TestFvecLinf (0 ms total)
+
+[----------] 1 test from TestFvecMadd
+[ RUN      ] TestFvecMadd.multiple_add
+[       OK ] TestFvecMadd.multiple_add (0 ms)
+[----------] 1 test from TestFvecMadd (0 ms total)
+
+[----------] 1 test from TestFvecMaskedSum
+[ RUN      ] TestFvecMaskedSum.masked_sum
+[       OK ] TestFvecMaskedSum.masked_sum (0 ms)
+[----------] 1 test from TestFvecMaskedSum (0 ms total)
+
+[----------] 2 tests from TestFvecAdd
+[ RUN      ] TestFvecAdd.add_array
+[       OK ] TestFvecAdd.add_array (0 ms)
+[ RUN      ] TestFvecAdd.add_value
+[       OK ] TestFvecAdd.add_value (0 ms)
+[----------] 2 tests from TestFvecAdd (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 10 tests from 8 test suites ran. (1 ms total)
+[  PASSED  ] 10 tests.
