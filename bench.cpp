@@ -40,7 +40,7 @@ void check(std::mt19937& rng) {
     size_t checks = 0;
     double max_abs_error = 0;
     for (auto metric : metrics) {
-        for (size_t d : {0, 1, 2, 3, 4, 5, 7, 8, 9, 16, 32}) {
+        for (size_t d : {0, 1, 2, 3, 4, 5, 7, 8, 9, 12, 16, 32}) {
             for (size_t ny : {0, 1, 2, 3, 4, 5, 7, 8, 9, 17, 255, 256, 257}) {
                 // Offset data and output by one float to exercise unaligned NEON loads.
                 std::vector<float> x(d + 1), y(d * ny + 1), out(ny + 2, 12345);
@@ -94,7 +94,7 @@ double time_ns(const Fn& run, const float* output) {
 void bench(std::mt19937& rng) {
     std::cout << std::fixed << std::setprecision(3);
     for (auto metric : metrics) {
-        for (size_t d : {2, 4, 8, 16, 32}) {
+        for (size_t d : {1, 2, 4, 8, 12, 16, 32}) {
             for (size_t ny : {4, 17, 255, 256, 1024}) {
                 std::vector<float> x(d), y(d * ny), out(ny);
                 fill(x, rng);
@@ -108,7 +108,7 @@ void bench(std::mt19937& rng) {
         }
         // 8-bit PQ lookup-table construction. No index training or list scan.
         constexpr size_t subquantizers = 96;
-        for (size_t dsub : {2, 4, 8}) {
+        for (size_t dsub : {1, 2, 4, 8, 12}) {
             faiss::ProductQuantizer pq(subquantizers * dsub, subquantizers, 8);
             std::vector<float> x(pq.d), out(pq.M * pq.ksub);
             fill(x, rng);

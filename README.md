@@ -4,7 +4,7 @@ This benchmark compares the Faiss `main` revision
 `16a95d63f2980b90c19e5308b4baec8f050b9b5b` with the low-dimensional
 NEON batch-distance patch. It builds the two CPU libraries with the same
 Release configuration and calls the public Faiss distance APIs. The
-optimization applies to the `ARM_NEON` kernels for dimensions 2, 4, and 8.
+optimization applies to the `ARM_NEON` kernels for dimensions 1, 2, 4, 8, and 12.
 
 Run on a clean Ubuntu 24.04 AArch64 checkout with these dependencies:
 

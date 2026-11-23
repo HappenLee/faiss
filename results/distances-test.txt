@@ -46,5 +46,5 @@ Running main() from ./googletest/src/gtest_main.cc
 [----------] 2 tests from TestFvecAdd (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 10 tests from 8 test suites ran. (1 ms total)
+[==========] 10 tests from 8 test suites ran. (0 ms total)
 [  PASSED  ] 10 tests.

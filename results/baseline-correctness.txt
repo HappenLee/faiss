@@ -1,1 +1,1 @@
-Checked 18128 outputs, max absolute error 4.21796e-06
+Checked 19776 outputs, max absolute error 3.65637e-06
