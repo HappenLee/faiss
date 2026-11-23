@@ -46,4 +46,4 @@ cmake version 3.31.6
 
 CMake suite maintained and supported by Kitware (kitware.com/cmake).
 Faiss base commit: 16a95d63f2980b90c19e5308b4baec8f050b9b5b
-4db06b1f695a2a15dd90129c4da12d51f9b0fbd0dab80cdd0502cf8b2960d82e  neon-batch-distances.patch
+933087d5e6a63ee29556638543aaa5fc085dde8429298d3f7b34e375e7bcb19b  neon-batch-distances.patch
