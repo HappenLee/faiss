@@ -1,8 +1,8 @@
 diff --git a/faiss/utils/simd_impl/distances_aarch64.cpp b/faiss/utils/simd_impl/distances_aarch64.cpp
-index d6da252..c484bcb 100644
+index d6da252..5084b7b 100644
 --- a/faiss/utils/simd_impl/distances_aarch64.cpp
 +++ b/faiss/utils/simd_impl/distances_aarch64.cpp
-@@ -62,14 +62,140 @@ void fvec_L2sqr_ny_transposed<SIMDLevel::ARM_NEON>(
+@@ -62,14 +62,177 @@ void fvec_L2sqr_ny_transposed<SIMDLevel::ARM_NEON>(
              dis, x, y, y_sqlen, d, d_offset, ny);
  }
  
@@ -123,43 +123,71 @@ index d6da252..c484bcb 100644
 +    }
 +}
 +
++template <class ElementOpIP>
++static void fvec_inner_products_ny_ref(
++        float* dis,
++        const float* x,
++        const float* y,
++        size_t d,
++        size_t ny) {
++#define DISPATCH(dval)                                  \
++    case dval:                                          \
++        fvec_op_ny_D##dval<ElementOpIP>(dis, x, y, ny); \
++        return;
++
++    switch (d) {
++        DISPATCH(2)
++        DISPATCH(4)
++        DISPATCH(8)
++        default:
++            fvec_inner_products_ny<SIMDLevel::NONE>(dis, x, y, d, ny);
++            return;
++    }
++#undef DISPATCH
++}
++
++template <class ElementOpL2>
++static void fvec_L2sqr_ny_ref(
++        float* dis,
++        const float* x,
++        const float* y,
++        size_t d,
++        size_t ny) {
++#define DISPATCH(dval)                                  \
++    case dval:                                          \
++        fvec_op_ny_D##dval<ElementOpL2>(dis, x, y, ny); \
++        return;
++
++    switch (d) {
++        DISPATCH(2)
++        DISPATCH(4)
++        DISPATCH(8)
++        default:
++            fvec_L2sqr_ny<SIMDLevel::NONE>(dis, x, y, d, ny);
++            return;
++    }
++#undef DISPATCH
++}
++
  template <>
  void fvec_inner_products_ny<SIMDLevel::ARM_NEON>(
 -        float* dis,
-+        float* ip,
++        float* ip, /* output inner product */
          const float* x,
          const float* y,
          size_t d,
          size_t ny) {
 -    fvec_inner_products_ny<SIMDLevel::NONE>(dis, x, y, d, ny);
-+    switch (d) {
-+        case 2:
-+            return fvec_op_ny_D2<NEONElementOpIP>(ip, x, y, ny);
-+        case 4:
-+            return fvec_op_ny_D4<NEONElementOpIP>(ip, x, y, ny);
-+        case 8:
-+            return fvec_op_ny_D8<NEONElementOpIP>(ip, x, y, ny);
-+        default:
-+            return fvec_inner_products_ny<SIMDLevel::NONE>(ip, x, y, d, ny);
-+    }
++    fvec_inner_products_ny_ref<NEONElementOpIP>(ip, x, y, d, ny);
  }
  
  template <>
-@@ -79,7 +205,16 @@ void fvec_L2sqr_ny<SIMDLevel::ARM_NEON>(
+@@ -79,7 +242,7 @@ void fvec_L2sqr_ny<SIMDLevel::ARM_NEON>(
          const float* y,
          size_t d,
          size_t ny) {
 -    fvec_L2sqr_ny<SIMDLevel::NONE>(dis, x, y, d, ny);
-+    switch (d) {
-+        case 2:
-+            return fvec_op_ny_D2<NEONElementOpL2>(dis, x, y, ny);
-+        case 4:
-+            return fvec_op_ny_D4<NEONElementOpL2>(dis, x, y, ny);
-+        case 8:
-+            return fvec_op_ny_D8<NEONElementOpL2>(dis, x, y, ny);
-+        default:
-+            return fvec_L2sqr_ny<SIMDLevel::NONE>(dis, x, y, d, ny);
-+    }
++    fvec_L2sqr_ny_ref<NEONElementOpL2>(dis, x, y, d, ny);
  }
  
  template <>
